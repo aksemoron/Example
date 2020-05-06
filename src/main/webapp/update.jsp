@@ -19,11 +19,6 @@
         <label>Имя:<br><input type="text" name="name"></label>
         <input type="submit">
     </form>
-    <form action="${pageContext.request.contextPath}/update" method="POST">
-        <legend>Введите новые данные:</legend>
-        <label>Имя:<br><input type="text" name="name"></label>
-        <input type="submit">
-    </form>
 </head>
 <body>
 
