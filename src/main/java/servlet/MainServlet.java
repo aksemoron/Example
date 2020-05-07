@@ -16,12 +16,6 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         userService.createTable();
-        if (req.getParameter("idToDelete") != null) {
-            if (!(userService.deleteById(req.getParameter("idToDelete")))) {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            }
-
-        }
         req.setAttribute("users", userService.getAllUsers());
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
         resp.setStatus(HttpServletResponse.SC_OK);
