@@ -17,7 +17,7 @@ public class UpdateServlet extends HttpServlet {
     User user;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        user= userService.getUserById(req.getParameter("idToUpdate"));
+        user= userService.getById(req.getParameter("idToUpdate"));
         req.setAttribute("user", "id: "+user.getId()+",  Имя: "+user.getName());
         req.getRequestDispatcher("/update.jsp").forward(req, resp);
         resp.setStatus(HttpServletResponse.SC_OK);
@@ -26,7 +26,7 @@ public class UpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         user.setName(req.getParameter("name"));
-        if (userService.modifyUserById(user.getId(),user)){
+        if (userService.modifyById(user.getId(),user)){
             resp.getWriter().println("User has been updated succesfully");
             resp.setStatus(HttpServletResponse.SC_OK);
         }else {

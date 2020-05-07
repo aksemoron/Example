@@ -1,4 +1,4 @@
-package dao;
+package util;
 
 
 import java.sql.Connection;
@@ -17,6 +17,5 @@ public class ConnectionToBase {
             e.printStackTrace();
             throw new IllegalStateException();
         }
-
     }
 }

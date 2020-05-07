@@ -12,7 +12,7 @@
             <td>${users.id}</td>
             <td>${users.name}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/index?idToDelete=${users.id}">Delete</a>
+                <a href="${pageContext.request.contextPath}/delete?idToDelete=${users.id}">Delete</a>
                 <a href="${pageContext.request.contextPath}/update?idToUpdate=${users.id}">Update</a>
             </td>
         </tr>
