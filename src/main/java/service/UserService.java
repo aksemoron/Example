@@ -1,18 +1,18 @@
 package service;
 
-import dao.ConnectionToBase;
+import util.ConnectionToBase;
 import dao.UserDao;
 import model.User;
 
 import java.util.List;
 
-public class UserService {
+public class UserService implements ServiceInterface<User> {
     boolean startServer = true;
 
     UserDao userDao = new UserDao(ConnectionToBase.getConnection());
 
     public List<User> getAllUsers() {
-        return userDao.getAllUsers();
+        return userDao.getAll();
     }
 
     public void createTable() {
@@ -22,20 +22,23 @@ public class UserService {
         }
     }
 
-    public Boolean addUser(String name) {
-        return userDao.addUser(name);
+    @Override
+    public Boolean add(String name) {
+        return userDao.add(name);
     }
 
-
-    public boolean deleteUserById(String id) {
-        return userDao.deleteUserById(id);
+    @Override
+    public boolean deleteById(String id) {
+        return userDao.deleteById(id);
     }
 
-
-    public User getUserById(String id){
-        return userDao.getUserById(id);
+    @Override
+    public User getById(String id){
+        return userDao.getById(id);
     }
-    public boolean modifyUserById(Long id,User user) {
+
+    @Override
+    public boolean modifyById(Long id, User user) {
         return userDao.modifyUserById(user, id);
     }
 }

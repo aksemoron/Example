@@ -19,7 +19,10 @@
         <label>Имя:<br><input type="text" name="name"></label>
         <input type="submit">
     </form>
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddd
 </head>
 <body>
 

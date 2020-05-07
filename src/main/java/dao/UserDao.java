@@ -6,14 +6,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDao {
+public class UserDao implements DaoInterface<User> {
     Connection connection;
 
     public UserDao(Connection connection) {
         this.connection = connection;
     }
 
-    public Boolean addUser(String name) {
+    @Override
+    public Boolean add(String name) {
         if (name.equals("")) {
             return false;
         }
@@ -30,7 +31,8 @@ public class UserDao {
     }
 
 
-    public boolean deleteUserById(String id) {
+    @Override
+    public boolean deleteById(String id) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users_preproject WHERE id = " + id);
             preparedStatement.executeUpdate();
@@ -42,6 +44,7 @@ public class UserDao {
         }
     }
 
+    @Override
     public Boolean modifyUserById(User user, Long id) {
         try {
             PreparedStatement ps = connection.prepareStatement("UPDATE users_preproject SET name = '" + user.getName() + "' WHERE id ='" + id + "'");
@@ -54,7 +57,8 @@ public class UserDao {
         }
     }
 
-    public List<User> getAllUsers() {
+    @Override
+    public List<User> getAll() {
         try {
             List<User> listUsers = new ArrayList<User>();
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users_preproject");
@@ -73,7 +77,8 @@ public class UserDao {
     }
 
 
-    public User getUserById(String id) {
+    @Override
+    public User getById(String id) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users_preproject WHERE id ='" + id + "'");
             ResultSet resultSet = preparedStatement.executeQuery();
