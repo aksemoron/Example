@@ -1,6 +1,9 @@
 package servlet;
 
+import model.User;
+import service.UserHybernateService;
 import service.UserService;
+import util.ConnectionToBase;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,9 +15,10 @@ import java.io.IOException;
 @WebServlet(value = "/delete")
 public class DeleteServlet extends HttpServlet {
     UserService userService= new UserService();
+    UserHybernateService userHybernateService = new UserHybernateService(ConnectionToBase.getSessionFactory());
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            if (!(userService.deleteById(req.getParameter("idToDelete")))) {
+            if (!(userHybernateService.deleteById(new User(Long.valueOf(req.getParameter("idToDelete")))))) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
         req.setAttribute("users", userService.getAllUsers());

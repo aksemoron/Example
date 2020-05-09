@@ -1,7 +1,7 @@
 package service;
 
 import util.ConnectionToBase;
-import dao.UserDao;
+import dao.UserJdbcDao;
 import model.User;
 
 import java.util.List;
@@ -9,36 +9,41 @@ import java.util.List;
 public class UserService implements ServiceInterface<User> {
     boolean startServer = true;
 
-    UserDao userDao = new UserDao(ConnectionToBase.getConnection());
+    UserJdbcDao userJdbcDao = new UserJdbcDao(ConnectionToBase.getConnection());
 
     public List<User> getAllUsers() {
-        return userDao.getAll();
+        return userJdbcDao.getAll();
     }
 
     public void createTable() {
         if (startServer) {
-            userDao.createTable();
+            userJdbcDao.createTable();
             startServer = false;
         }
     }
 
     @Override
-    public Boolean add(String name) {
-        return userDao.add(name);
+    public Boolean add(User user) {
+        return userJdbcDao.add(user);
     }
 
     @Override
-    public boolean deleteById(String id) {
-        return userDao.deleteById(id);
+    public boolean deleteById(User user) {
+        return userJdbcDao.deleteById(user);
     }
 
     @Override
-    public User getById(String id){
-        return userDao.getById(id);
+    public User getById(User user){
+        return userJdbcDao.getById(user);
     }
 
     @Override
     public boolean modifyById(Long id, User user) {
-        return userDao.modifyUserById(user, id);
+        return userJdbcDao.modifyUserById(user, id);
+    }
+
+    @Override
+    public List<User> getAll() {
+        return userJdbcDao.getAll();
     }
 }

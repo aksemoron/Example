@@ -1,18 +1,37 @@
 package model;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "users_preproject")
 public class User {
 
+    public User() {
 
-    private Long id;
-
-
-    private String name;
+    }
 
     public User(Long id, String name) {
         this.id = id;
         this.name = name;
     }
+
+    public User(Long id) {
+        this.id = id;
+    }
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name")
+    private String name;
+
+
 
     public Long getId() {
         return id;

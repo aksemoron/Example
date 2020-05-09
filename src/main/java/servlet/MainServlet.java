@@ -1,6 +1,10 @@
 package servlet;
 
+import model.User;
+import org.hibernate.SessionFactory;
+import service.UserHybernateService;
 import service.UserService;
+import util.ConnectionToBase;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,22 +16,25 @@ import java.io.IOException;
 @WebServlet(value = "/index")
 public class MainServlet extends HttpServlet {
     UserService userService = new UserService();
+    UserHybernateService userHybernateService = new UserHybernateService(ConnectionToBase.getSessionFactory());
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         userService.createTable();
-        req.setAttribute("users", userService.getAllUsers());
+        req.setAttribute("users", userHybernateService.getAll());
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!(userService.add(req.getParameter("name")))) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        User user = new User(req.getParameter("name"));
+        if (userHybernateService.add(user)){
+            req.setAttribute("users", userHybernateService.getAll());
+            req.getRequestDispatcher("/index.jsp").forward(req, resp);
         }
 
-        req.setAttribute("users", userService.getAllUsers());
-        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+
     }
 }
