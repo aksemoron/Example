@@ -1,26 +1,15 @@
 package service;
 
-import util.ConnectionToBase;
+import util.DBHelper;
 import dao.UserJdbcDao;
 import model.User;
 
 import java.util.List;
 
 public class UserService implements ServiceInterface<User> {
-    boolean startServer = true;
 
-    UserJdbcDao userJdbcDao = new UserJdbcDao(ConnectionToBase.getConnection());
+    UserJdbcDao userJdbcDao = new UserJdbcDao(DBHelper.getDBHelper().getConnection());
 
-    public List<User> getAllUsers() {
-        return userJdbcDao.getAll();
-    }
-
-    public void createTable() {
-        if (startServer) {
-            userJdbcDao.createTable();
-            startServer = false;
-        }
-    }
 
     @Override
     public Boolean add(User user) {

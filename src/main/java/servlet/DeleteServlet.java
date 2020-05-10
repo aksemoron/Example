@@ -1,9 +1,11 @@
 package servlet;
 
+import dao.UserDAO;
+import dao.UserDaoFactory;
 import model.User;
 import service.UserHybernateService;
 import service.UserService;
-import util.ConnectionToBase;
+import util.DBHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,14 +16,14 @@ import java.io.IOException;
 
 @WebServlet(value = "/delete")
 public class DeleteServlet extends HttpServlet {
-    UserService userService= new UserService();
-    UserHybernateService userHybernateService = new UserHybernateService(ConnectionToBase.getSessionFactory());
+    UserDaoFactory userDaoFactory = new UserDaoFactory();
+    UserDAO userDAO = userDaoFactory.getUserDao();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            if (!(userHybernateService.deleteById(new User(Long.valueOf(req.getParameter("idToDelete")))))) {
+            if (!(userDAO.deleteById(new User(Long.valueOf(req.getParameter("idToDelete")))))) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
-        req.setAttribute("users", userService.getAllUsers());
+        req.setAttribute("users", userDAO.getAll());
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
         resp.setStatus(HttpServletResponse.SC_OK);
     }

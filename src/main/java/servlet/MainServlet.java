@@ -1,10 +1,11 @@
 package servlet;
 
+import dao.UserDAO;
+import dao.UserDaoFactory;
 import model.User;
-import org.hibernate.SessionFactory;
 import service.UserHybernateService;
 import service.UserService;
-import util.ConnectionToBase;
+import util.DBHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,14 +16,12 @@ import java.io.IOException;
 
 @WebServlet(value = "/index")
 public class MainServlet extends HttpServlet {
-    UserService userService = new UserService();
-    UserHybernateService userHybernateService = new UserHybernateService(ConnectionToBase.getSessionFactory());
-
+    UserDaoFactory userDaoFactory = new UserDaoFactory();
+    UserDAO userDAO = userDaoFactory.getUserDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        userService.createTable();
-        req.setAttribute("users", userHybernateService.getAll());
+        req.setAttribute("users", userDAO.getAll());
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
@@ -30,11 +29,9 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = new User(req.getParameter("name"));
-        if (userHybernateService.add(user)){
-            req.setAttribute("users", userHybernateService.getAll());
+        if (userDAO.add(user)) {
+            req.setAttribute("users", userDAO.getAll());
             req.getRequestDispatcher("/index.jsp").forward(req, resp);
         }
-
-
     }
 }
