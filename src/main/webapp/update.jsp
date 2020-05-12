@@ -1,5 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--
   Created by IntelliJ IDEA.
   User: aks
@@ -12,8 +12,7 @@
 <head>
     <title>UpdateUser</title>
     <b>Редактируем пользователя: </b>
-        "${user}"
-
+      "${user}"
     <form action="${pageContext.request.contextPath}/update" method="POST">
         <legend>Введите новые данные:</legend>
         <label>Имя:<br><input type="text" name="name"></label>

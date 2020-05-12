@@ -1,11 +1,11 @@
 package dao;
 
 import model.User;
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import util.DBHelper;
+
 
 
 import java.util.List;
@@ -54,7 +54,7 @@ public class UserHibernateDAO implements UserDAO<User> {
     public List<User> getAll() {
         Session session =sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("FROM User");
+        Query<User> query = session.createQuery("FROM User",User.class);
         List<User> users = query.list();
         transaction.commit();
         session.close();
@@ -65,7 +65,7 @@ public class UserHibernateDAO implements UserDAO<User> {
     public User getById(User user) {
         Session session =sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("FROM User WHERE id = :id");
+        Query<User> query = session.createQuery("FROM User WHERE id = :id",User.class);
         query.setParameter("id", user.getId());
         List<User> cars = query.list();
         transaction.commit();

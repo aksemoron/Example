@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class UserDaoFactory {
 
-    private static String getProperties() throws IOException {
+    private static String getProperties() throws IOException {  //перенести в db helper
         Properties properties = new Properties();
         properties.load(UserDaoFactory.class.getClassLoader().getResourceAsStream("config.properties"));
         return properties.getProperty("daotype");
