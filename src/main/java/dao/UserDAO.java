@@ -6,7 +6,7 @@ import model.User;
 import java.util.List;
 
 public interface UserDAO<T> {
-    boolean add(User user);
+    boolean add(T user);
 
     boolean deleteById(T user);
 
