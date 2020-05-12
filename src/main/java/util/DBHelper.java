@@ -28,7 +28,6 @@ public class DBHelper {
 
     }
 
-
     public Connection getConnection() {
         try {
             DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").newInstance());
@@ -52,4 +51,5 @@ public class DBHelper {
 //       configuration.setProperty("hibernate.hbm2ddl.auto", "create");
         return configuration;
     }
+
 }

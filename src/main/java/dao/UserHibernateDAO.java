@@ -3,24 +3,27 @@ package dao;
 import model.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import util.DBHelper;
 
 
 import java.util.List;
 
-public class UserHibernateDAO implements UserDAO<User>{
+public class UserHibernateDAO implements UserDAO<User> {
 
-    private Session session;
+    private SessionFactory sessionFactory;
 
 
-    public UserHibernateDAO(Session session){
-        this.session=session;
+    public UserHibernateDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
 
     @Override
     public boolean add(User user) {
-        Transaction transaction =session.beginTransaction();
+        Session session =sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
         session.save(user);
         transaction.commit();
         session.close();
@@ -29,6 +32,7 @@ public class UserHibernateDAO implements UserDAO<User>{
 
     @Override
     public boolean deleteById(User user) {
+        Session session =sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.delete(user);
         transaction.commit();
@@ -38,14 +42,17 @@ public class UserHibernateDAO implements UserDAO<User>{
 
     @Override
     public boolean modifyUserById(User user, Long id) {
-       Transaction transaction = session.beginTransaction();
-       session.update(user);
-       transaction.commit();
-       return true;
+        Session session =sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(user);
+        transaction.commit();
+        session.close();
+        return true;
     }
 
     @Override
     public List<User> getAll() {
+        Session session =sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("FROM User");
         List<User> users = query.list();
@@ -56,10 +63,11 @@ public class UserHibernateDAO implements UserDAO<User>{
 
     @Override
     public User getById(User user) {
+        Session session =sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("FROM User WHERE id = :id");
         query.setParameter("id", user.getId());
-        List<User> cars =query.list();
+        List<User> cars = query.list();
         transaction.commit();
         session.close();
         return cars.get(0);

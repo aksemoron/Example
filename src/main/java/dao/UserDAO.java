@@ -14,5 +14,5 @@ public interface UserDAO<T> {
 
     List<T> getAll();
 
-    T getById(User user);
+    T getById(T user);
 }
