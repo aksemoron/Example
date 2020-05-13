@@ -11,6 +11,8 @@
         <tr>
             <td>${users.id}</td>
             <td>${users.name}</td>
+            <td>${users.password}</td>
+            <td>${users.role}</td>
             <td>
                 <a href="${pageContext.request.contextPath}/delete?idToDelete=${users.id}">Delete</a>
                 <a href="${pageContext.request.contextPath}/update?idToUpdate=${users.id}">Update</a>
@@ -22,6 +24,9 @@
 <form action="${pageContext.request.contextPath}/index" method="POST">
     <legend>Add user</legend>
     <label>Имя:<br><input type="text" name="name"></label>
+    <label>Пароль:<br><input type="text" name="password"></label>
+    <label>Роль:<br><input type="text" name="role"></label>
+
     <input type="submit">
 </form>
 </body>

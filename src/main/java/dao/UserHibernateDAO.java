@@ -67,9 +67,9 @@ public class UserHibernateDAO implements UserDAO<User> {
         Transaction transaction = session.beginTransaction();
         Query<User> query = session.createQuery("FROM User WHERE id = :id",User.class);
         query.setParameter("id", user.getId());
-        List<User> cars = query.list();
+        List<User> users = query.list();
         transaction.commit();
         session.close();
-        return cars.get(0);
+        return users.get(0);
     }
 }

@@ -22,7 +22,8 @@ public class UpdateServlet extends HttpServlet {
         User  user =  ServiseUser.getInstance().getById(new User(Long.valueOf(req.getParameter("idToUpdate"))));
         HttpSession session = req.getSession();
         session.setAttribute("id", user.getId());
-        req.setAttribute("user", "id: " + user.getId() + ",  Имя: " + user.getName());
+        req.setAttribute("user", "id: " + user.getId() + ",  Имя: " + user.getName()+", пароль: "+user.getPassword()+
+                ", роль: "+user.getRole());
         req.getRequestDispatcher("/update.jsp").forward(req, resp);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
@@ -33,6 +34,8 @@ public class UpdateServlet extends HttpServlet {
         HttpSession session = req.getSession();
         user.setId((Long) session.getAttribute("id"));
         user.setName(req.getParameter("name"));
+        user.setPassword(req.getParameter("password"));
+        user.setRole(req.getParameter("role"));
         if (ServiseUser.getInstance().modifyUserById(user, user.getId())) {
             resp.getWriter().println("User has been updated succesfully");
             resp.setStatus(HttpServletResponse.SC_OK);

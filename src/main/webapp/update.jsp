@@ -16,6 +16,8 @@
     <form action="${pageContext.request.contextPath}/update" method="POST">
         <legend>Введите новые данные:</legend>
         <label>Имя:<br><input type="text" name="name"></label>
+        <label>Пароль:<br><input type="text" name="password"></label>
+        <label>Роль:<br><input type="text" name="role"></label>
         <input type="submit">
     </form>
 </head>

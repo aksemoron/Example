@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(value = "/index")
-public class MainServlet extends HttpServlet {
+public class index extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,6 +23,8 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = new User(req.getParameter("name"));
+        user.setPassword(req.getParameter("password"));
+        user.setRole(req.getParameter("role"));
         if (ServiseUser.getInstance().add(user)) {
             req.setAttribute("users", ServiseUser.getInstance().getAll());
             req.getRequestDispatcher("/index.jsp").forward(req, resp);
