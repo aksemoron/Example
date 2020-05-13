@@ -19,8 +19,11 @@ public class UserJdbcDao implements UserDAO<User> {
             return false;
         }
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users_preproject (name) VALUES (?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users_preproject " +
+                    "(name,password,role) VALUES (?,?,?)");
             preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2,user.getPassword());
+            preparedStatement.setString(3,user.getRole());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
@@ -34,7 +37,8 @@ public class UserJdbcDao implements UserDAO<User> {
     @Override
     public boolean deleteById(User user) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users_preproject WHERE id = " + user.getId());
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users_preproject " +
+                    "WHERE id = " + user.getId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
@@ -47,7 +51,9 @@ public class UserJdbcDao implements UserDAO<User> {
 //    @Override
     public boolean modifyUserById(User user, Long id) {
         try {
-            PreparedStatement ps = connection.prepareStatement("UPDATE users_preproject SET name = '" + user.getName() + "' WHERE id ='" + id + "'");
+            PreparedStatement ps = connection.prepareStatement("UPDATE users_preproject SET name = '" +
+                    user.getName() + "'"+", password = '"+user.getPassword()+"'"+", role = '"+user.getRole()+"'"+
+                    " WHERE id ='" + id + "'");
             ps.executeUpdate();
             ps.close();
             return true;
@@ -65,6 +71,8 @@ public class UserJdbcDao implements UserDAO<User> {
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
                 User user = new User(resultSet.getLong("id"), resultSet.getString("name"));
+                user.setRole(resultSet.getString("role"));
+                user.setPassword(resultSet.getString("password"));
                 listUsers.add(user);
             }
             stmt.close();
@@ -80,10 +88,13 @@ public class UserJdbcDao implements UserDAO<User> {
     @Override
     public User getById(User user) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users_preproject WHERE id ='" + user.getId() + "'");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users_preproject " +
+                    "WHERE id ='" + user.getId() + "'");
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             User userReturn = new User(resultSet.getLong("id"), resultSet.getString("name"));
+            userReturn.setRole(resultSet.getString("role"));
+            userReturn.setPassword(resultSet.getString("password"));
             return userReturn;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,7 +106,8 @@ public class UserJdbcDao implements UserDAO<User> {
     public void createTable() {
         try {
             Statement stmt = connection.createStatement();
-            stmt.execute("create table if not exists users_preproject (id bigint auto_increment, name varchar(256), primary key (id))");
+            stmt.execute("create table if not exists users_preproject (id bigint auto_increment," +
+                    " name varchar(256), primary key (id))");
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
