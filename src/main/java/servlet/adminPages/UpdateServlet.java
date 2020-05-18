@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(value = "/update")
+@WebServlet(value = "/admin/update")
 public class UpdateServlet extends HttpServlet {
 
 

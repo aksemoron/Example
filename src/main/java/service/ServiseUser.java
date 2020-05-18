@@ -48,6 +48,11 @@ public class ServiseUser implements UserInterface<User> {
         return (User) userDAO.getById(user);
     }
 
+    @Override
+    public User logIN(User user) {
+        return (User) userDAO.logIN(user);
+    }
+
 
     @Override
     public List<User> getAll() {

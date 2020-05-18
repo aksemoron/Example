@@ -13,7 +13,7 @@
     <title>UpdateUser</title>
     <b>Редактируем пользователя: </b>
       "${user}"
-    <form action="${pageContext.request.contextPath}/update" method="POST">
+    <form action="${pageContext.request.contextPath}/admin/update" method="POST">
         <legend>Введите новые данные:</legend>
         <label>Имя:<br><input type="text" name="name"></label>
         <label>Пароль:<br><input type="text" name="password"></label>

@@ -14,14 +14,14 @@
             <td>${users.password}</td>
             <td>${users.role}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/delete?idToDelete=${users.id}">Delete</a>
-                <a href="${pageContext.request.contextPath}/update?idToUpdate=${users.id}">Update</a>
+                <a href="${pageContext.request.contextPath}/admin/delete?idToDelete=${users.id}">Delete</a>
+                <a href="${pageContext.request.contextPath}/admin/update?idToUpdate=${users.id}">Update</a>
             </td>
         </tr>
 
     </c:forEach>
 </table>
-<form action="${pageContext.request.contextPath}/index" method="POST">
+<form action="${pageContext.request.contextPath}/admin/index" method="POST">
     <legend>Add user</legend>
     <label>Имя:<br><input type="text" name="name"></label>
     <label>Пароль:<br><input type="text" name="password"></label>

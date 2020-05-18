@@ -12,4 +12,6 @@ public interface UserInterface<T> {
     List<T> getAll();
 
     T getById(T user);
+
+    T logIN(T user);
 }

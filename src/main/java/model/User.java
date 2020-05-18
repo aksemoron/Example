@@ -28,6 +28,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public User(Long id, String name, String password, String role) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.role = role;
+    }
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
     @Column(name = "name")
     private String name;
 

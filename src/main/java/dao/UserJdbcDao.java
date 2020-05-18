@@ -22,8 +22,8 @@ public class UserJdbcDao implements UserDAO<User> {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users_preproject " +
                     "(name,password,role) VALUES (?,?,?)");
             preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2,user.getPassword());
-            preparedStatement.setString(3,user.getRole());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getRole());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
@@ -48,11 +48,11 @@ public class UserJdbcDao implements UserDAO<User> {
         }
     }
 
-//    @Override
+    //    @Override
     public boolean modifyUserById(User user, Long id) {
         try {
             PreparedStatement ps = connection.prepareStatement("UPDATE users_preproject SET name = '" +
-                    user.getName() + "'"+", password = '"+user.getPassword()+"'"+", role = '"+user.getRole()+"'"+
+                    user.getName() + "'" + ", password = '" + user.getPassword() + "'" + ", role = '" + user.getRole() + "'" +
                     " WHERE id ='" + id + "'");
             ps.executeUpdate();
             ps.close();
@@ -101,6 +101,26 @@ public class UserJdbcDao implements UserDAO<User> {
             return null;
         }
 
+    }
+
+    @Override
+    public User logIN(User user) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users_preproject " +
+                    "WHERE name ='" + user.getName() + "'"+" AND password = '"+user.getPassword()+"'");
+            ResultSet resultSet = ps.executeQuery();
+            resultSet.next();
+            Long id = resultSet.getLong("id");
+            String role = resultSet.getString("role");
+            User user1 = new User(id, user.getName(), user.getPassword(), role);
+            System.out.println(user1.getId());
+            return new User(id, user.getName(), user.getPassword(), role);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public void createTable() {
