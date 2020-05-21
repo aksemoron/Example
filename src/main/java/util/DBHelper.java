@@ -31,6 +31,8 @@ public class DBHelper {
     public Connection getConnection() {
         try {
             DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").newInstance());
+
+            //передать строку через параметры как в конфигурашин
             return DriverManager.getConnection("jdbc:mysql://localhost:3306/db_example?user=root&password=6831");
         } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();

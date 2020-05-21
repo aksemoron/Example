@@ -1,4 +1,4 @@
-package servlet;
+package servlet.adminPages;
 
 
 import model.User;
@@ -15,15 +15,17 @@ import java.io.IOException;
 @WebServlet(value = "/admin/update")
 public class UpdateServlet extends HttpServlet {
 
-
+//параметр и атрибут в чем разница
+    //в какой момент времени у хибернейта выполняется запрос в бд
+    //персинстанс контекст
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User  user =  ServiseUser.getInstance().getById(new User(Long.valueOf(req.getParameter("idToUpdate"))));
+        User user = ServiseUser.getInstance().getById(new User(Long.valueOf(req.getParameter("idToUpdate"))));
         HttpSession session = req.getSession();
         session.setAttribute("id", user.getId());
-        req.setAttribute("user", "id: " + user.getId() + ",  Имя: " + user.getName()+", пароль: "+user.getPassword()+
-                ", роль: "+user.getRole());
+        req.setAttribute("user", "id: " + user.getId() + ",  Имя: " + user.getName() + ", пароль: " + user.getPassword() +
+                ", роль: " + user.getRole());
         req.getRequestDispatcher("/update.jsp").forward(req, resp);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
@@ -31,6 +33,7 @@ public class UpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = new User();
+        //сделать редерект на индекс
         HttpSession session = req.getSession();
         user.setId((Long) session.getAttribute("id"));
         user.setName(req.getParameter("name"));
@@ -42,7 +45,5 @@ public class UpdateServlet extends HttpServlet {
         } else {
             resp.getWriter().println("User not updated");
         }
-
-
     }
 }

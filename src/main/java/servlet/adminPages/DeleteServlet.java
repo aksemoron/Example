@@ -1,4 +1,4 @@
-package servlet;
+package servlet.adminPages;
 
 
 import model.User;

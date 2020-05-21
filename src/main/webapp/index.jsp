@@ -20,6 +20,7 @@
         </tr>
 
     </c:forEach>
+
 </table>
 <form action="${pageContext.request.contextPath}/admin/index" method="POST">
     <legend>Add user</legend>

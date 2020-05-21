@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
+// две звездочки зачем
+//куки и в чем разница
 @WebFilter("/admin/*")
 public class AdminFilter implements Filter {
 

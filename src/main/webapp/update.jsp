@@ -13,8 +13,11 @@
     <title>UpdateUser</title>
     <b>Редактируем пользователя: </b>
       "${user}"
+
+    //сделать заполнение полей по умолчанию
     <form action="${pageContext.request.contextPath}/admin/update" method="POST">
         <legend>Введите новые данные:</legend>
+        //добавить скрытое поле id
         <label>Имя:<br><input type="text" name="name"></label>
         <label>Пароль:<br><input type="text" name="password"></label>
         <label>Роль:<br><input type="text" name="role"></label>

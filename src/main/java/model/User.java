@@ -6,6 +6,9 @@ import javax.persistence.*;
 @Table(name = "users_preproject")
 public class User {
 
+    //зачем нужен пустой конструктор
+    //состояние
+
     public User() {
 
     }
@@ -22,6 +25,7 @@ public class User {
     public User(String name) {
         this.name = name;
     }
+
 
     @Id
     @Column(name = "id")
@@ -48,6 +52,7 @@ public class User {
 
     @Column(name = "role")
     private String role;
+
 
     public String getPassword() {
         return password;

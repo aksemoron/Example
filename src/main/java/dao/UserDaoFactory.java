@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
+//в отдельный пакет
 public class UserDaoFactory {
 
     private static String getProperties() throws IOException {
@@ -24,7 +24,7 @@ public class UserDaoFactory {
                 case "hibernate":
                     return new UserHibernateDAO(DBHelper.getDBHelper().getConfiguration().buildSessionFactory());
                 default:
-                    throw new IllegalArgumentException("Wrong doughnut type:" + daoType);
+                    return new UserHibernateDAO(DBHelper.getDBHelper().getConfiguration().buildSessionFactory());
             }
         } catch (IOException e) {
             e.printStackTrace();
