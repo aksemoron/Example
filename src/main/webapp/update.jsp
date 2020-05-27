@@ -12,19 +12,18 @@
 <head>
     <title>UpdateUser</title>
     <b>Редактируем пользователя: </b>
-      "${user}"
+    <c:set var="user" scope="request" value="${user}" />
 
-    //сделать заполнение полей по умолчанию
-    <form action="${pageContext.request.contextPath}/admin/update" method="POST">
-        <legend>Введите новые данные:</legend>
-        //добавить скрытое поле id
-        <label>Имя:<br><input type="text" name="name"></label>
-        <label>Пароль:<br><input type="text" name="password"></label>
-        <label>Роль:<br><input type="text" name="role"></label>
-        <input type="submit">
-    </form>
 </head>
 <body>
+<form action="${pageContext.request.contextPath}/admin/update" method="POST">
 
+    <legend>Введите новые данные:</legend>
+    <label>Имя:<br><input type="text" name="name" value="${user.name}"></label>
+    <label>Пароль:<br><input type="text" name="password" value="${user.password}"></label>
+    <label>Роль:<br><input type="text" name="role" value="${user.role}"></label>
+    <input type="hidden" name="id" value="${user.id}">
+    <input type="submit">
+</form>
 </body>
 </html>

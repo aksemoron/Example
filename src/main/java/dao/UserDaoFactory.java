@@ -1,23 +1,19 @@
 package dao;
 
 import util.DBHelper;
+import util.PropertyReader;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
-//в отдельный пакет
+
+//в отдельный пакет =!
 public class UserDaoFactory {
 
-    private static String getProperties() throws IOException {
-        Properties properties = new Properties();
-        properties.load(UserDaoFactory.class.getClassLoader().getResourceAsStream("config.properties"));
-        return properties.getProperty("daotype");
-    }
 
     public static UserDAO getUserDao() {
         try {
-            String daoType = getProperties();
+            Properties properties = PropertyReader.getProperties("realisationConectionTobase");
+            String daoType = properties.getProperty("daotype");
             switch (daoType) {
                 case "jdbc":
                     return new UserJdbcDao(DBHelper.getDBHelper().getConnection());

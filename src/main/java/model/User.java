@@ -8,6 +8,7 @@ public class User {
 
     //зачем нужен пустой конструктор
     //состояние
+    //HIBERNATE_SEQUENCE
 
     public User() {
 

@@ -52,7 +52,8 @@ public class UserJdbcDao implements UserDAO<User> {
     public boolean modifyUserById(User user, Long id) {
         try {
             PreparedStatement ps = connection.prepareStatement("UPDATE users_preproject SET name = '" +
-                    user.getName() + "'" + ", password = '" + user.getPassword() + "'" + ", role = '" + user.getRole() + "'" +
+                    user.getName() + "'" + ", password = '" + user.getPassword() + "'" + ", role = '" + user.getRole() +
+                    "'" +
                     " WHERE id ='" + id + "'");
             ps.executeUpdate();
             ps.close();

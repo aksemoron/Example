@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(value = "/admin/update")
-public class UpdateServlet extends HttpServlet {
+public class AdminUpdateServlet extends HttpServlet {
 
 //параметр и атрибут в чем разница
     //в какой момент времени у хибернейта выполняется запрос в бд
@@ -22,10 +22,7 @@ public class UpdateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = ServiseUser.getInstance().getById(new User(Long.valueOf(req.getParameter("idToUpdate"))));
-        HttpSession session = req.getSession();
-        session.setAttribute("id", user.getId());
-        req.setAttribute("user", "id: " + user.getId() + ",  Имя: " + user.getName() + ", пароль: " + user.getPassword() +
-                ", роль: " + user.getRole());
+        req.setAttribute("user", user);
         req.getRequestDispatcher("/update.jsp").forward(req, resp);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
@@ -33,14 +30,12 @@ public class UpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = new User();
-        //сделать редерект на индекс
-        HttpSession session = req.getSession();
-        user.setId((Long) session.getAttribute("id"));
+        user.setId(Long.valueOf(req.getParameter("id")));
         user.setName(req.getParameter("name"));
         user.setPassword(req.getParameter("password"));
         user.setRole(req.getParameter("role"));
         if (ServiseUser.getInstance().modifyUserById(user, user.getId())) {
-            resp.getWriter().println("User has been updated succesfully");
+            resp.sendRedirect(req.getContextPath() + "/admin/index");
             resp.setStatus(HttpServletResponse.SC_OK);
         } else {
             resp.getWriter().println("User not updated");

@@ -81,6 +81,7 @@ public class UserHibernateDAO implements UserDAO<User> {
         query.setParameter("password", user.getPassword());
         List<User> users = query.list();
         transaction.commit();
+        System.out.println(users.get(0));
         session.close();
         return users.get(0);
     }

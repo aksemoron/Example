@@ -7,10 +7,12 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 
 public class DBHelper {
@@ -28,22 +30,30 @@ public class DBHelper {
 
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws IOException {
+
+        Properties properties = PropertyReader.getProperties("jdbc");
         try {
             DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").newInstance());
 
-            //передать строку через параметры как в конфигурашин
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/db_example?user=root&password=6831");
+            //передать строку через параметры как в конфигурашин  =!
+            return DriverManager.getConnection(properties.getProperty("jdbcConfig"));
         } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();
             throw new IllegalStateException();
         }
     }
 
-    public Configuration getConfiguration() {
+    public Configuration getConfiguration() throws IOException {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(User.class);
+        return configuration.setProperties(PropertyReader.getProperties("hibernate"));
 
+
+
+        /*
+        Configuration configuration = new Configuration();
+        configuration.addAnnotatedClass(User.class);
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
         configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/db_example");
@@ -51,7 +61,7 @@ public class DBHelper {
         configuration.setProperty("hibernate.connection.password", "6831");
         configuration.setProperty("hibernate.show_sql", "true");
 //       configuration.setProperty("hibernate.hbm2ddl.auto", "create");
-        return configuration;
+        return configuration;*/
     }
 
 }
